@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Service - Single Unit Test",
+          "type": "node",
+          "request": "launch",
+          "program": "${workspaceFolder}/service/node_modules/jest/bin/jest",
+          "args": ["--runInBand", "${fileBasenameNoExtension}"],
+          "cwd": "${workspaceFolder}/service",
+          "console": "integratedTerminal",
+          "skipFiles": ["<node_internals>/**"]
+      }
+  ]
+}
