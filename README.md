@@ -1,19 +1,19 @@
 # @developerjake/djlogger
 [![npm (scoped)](https://img.shields.io/npm/v/@developerjake/djlogger)](https://www.npmjs.com/package/@developerjake/djlogger) [![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/developerjake/djlogger/main)](https://github.com/developerjake/djlogger)
-A simple collection of typescript logging tools using [winston](https://www.npmjs.com/package/winston) - adds timestamps, colourization and will output your logs into a `logs` directory in the root of your project.
-## Overview
-This is a minimalist set of utilities that can be imported and used within a few seconds to get drastically better and more useful logs into you application as you build it - nothing more. You'll probably want to replace it down the line. This is just a convenience tool for hitting the ground running.
 
-Using  the utilities herein to log in your application will save all of your logs to appropriately named files added to a `logs/` directory which will be created in the root of your project.
+A simple collection of typescript logging tools using [winston](https://www.npmjs.com/package/winston) - adds timestamps, colours, and outputs your logs into a `logs` directory in the root of your project.
+## Overview
+This is a minimalist set of utilities that can be imported and used within a few seconds to get considerably more useful logging into an application as you build it - nothing more. You'll probably want to replace it down the line. This is just a convenience tool to hit the ground running.
+
+Log files saved into the `logs` directory in the root of your project are named intuitively:
 * info.log
 * debug.log
 * silly.log
 
-All logs will be timestamped; the default locale is `en-GB` which can be changed.
-Timestamps are just that, _time_ stamps. They do not include the date.
+All logs will be timestamped (does not include the date).
 Logging in the terminal will have the log-level printed and colourized.
 ## Ready-Steady-Go
-1. Install with one of these depending on your preferred package manager:
+1. Install the package with one of these depending on your preferred package manager:
 	* `npm install @developerjake/djlogger`
 	* `yarn add @developerjake/djlogger`
 2. Import what you need (see [examples](#example-usage)) and start using it.
@@ -27,17 +27,19 @@ LOG_LEVEL=silly
 ```
 Options are `info`, `debug`, and `silly`.
 ### Change your locale (Optional)
-The locale defaults to `en-GB`. If you want a different once, [see this example](#logger-instance-with-custom-configuration) on how to set it.
+The locale defaults to `en-GB`. If you want a different one, [see this example](#logger-instance-with-custom-configuration) on how to set it.
 ### Keep old logs (Optional)
-By default, each time you restart your app, the old log files are nuked. Why? Well, because that's my preference. Change it easily - [see this example](#logger-instance-with-custom-configuration).
+By default each time you restart your app the old log files are nuked. Why? Well, because that's my preference. To change this behaviour to keep your logs between restarts [see this example](#logger-instance-with-custom-configuration).
 
 ## Public API
-#### Get a logger instance
+This package exposes the following.
+### A logger instance
 *  `logger`
+### A method which returns a logger instance
 *  `getLogger(wipePreviousLogs=true, locale='en-GB')`
-#### Overwrite the NodeJS Console
+### A method which overwrites the NodeJS Console logging methods
 *  `overWriteConsole(wipePreviousLogs=true, locale='en-GB')`
-#### Individual logging methods
+### Logging methods
 *  `log`
 *  `info`
 *  `debug`
@@ -47,13 +49,7 @@ By default, each time you restart your app, the old log files are nuked. Why? We
 *  `table`
 
 ## Example Usage
-### Set  the logging level
-* Use a variable in a `.env` file  in the root of your project
-* If not set, logging level defaults to `debug`
-```JSON
-LOG_LEVEL=silly
-```
-### Default-config logger
+### Logger instance with default configuration
 ```typescript
 import { logger } from 'djlogger';
 
