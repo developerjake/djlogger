@@ -25,20 +25,20 @@ const logFormatter = (logFunction: LeveledLogMethod) => {
   return(...args: any[]) => {
     const strings: string[] = [];
     const objs: any[] = [];
-    let index = 0;
+    let count = 0;
     args.forEach(arg => {
       if (typeof arg === 'object') {
         objs.push(arg);
-        ++index;
+        ++count;
       } else if (arg?.toString) {
-        if (strings[index]) strings[index] += ` ${arg.toString()}`;
-        else strings[index] = `${arg.toString()}`;
+        if (strings[count]) strings[count] += ` ${arg.toString()}`;
+        else strings[count] = `${arg.toString()}`;
       } else if (arg) {
-        if (strings[index]) strings[index] += ` ${arg}`;
-        else strings[index] = `${arg}`;
+        if (strings[count]) strings[count] += ` ${arg}`;
+        else strings[count] = `${arg}`;
       }
     });
-    for (let i = 0; i < index + 1; i++) {
+    for (let i = 0; i < count; i++) {
       if (strings[i]) logFunction(strings[i]);
       if (objs[i]) logFunction(objs[i]);
     }
@@ -58,17 +58,12 @@ export const getLogger = (wipePreviousLogs = true, locale = 'en-GB'): Logger => 
     return `${dateString} ${timeString} ${level.padStart(5)}: ${message}`;
   });
 
-  const fileFormat = combine(format.splat(), format.simple(), timestamp(), fileFormatter);
-  const consoleFormat = combine(
-    format.splat(),
-    format.simple(),
-    timestamp(),
-    format.colorize({ level: true }),
-    consoleFormatter
-  );
+  const fileFormat = combine(fileFormatter);
+  const consoleFormat = combine(format.colorize({ level: true }), consoleFormatter);
 
   const winstonLogger = createLogger({
     level: 'info',
+    format: combine(format.splat(), format.simple(), timestamp()),
     transports: [
       new transports.File({ filename: 'logs/info.log', level: 'info', options, format: fileFormat }),
       new transports.File({ filename: 'logs/debug.log', level: 'debug', options, format: fileFormat }),
