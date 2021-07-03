@@ -48,29 +48,37 @@ const logFormatter = (logFunction: LeveledLogMethod) => {
 export const getLogger = (wipePreviousLogs = true, locale = 'en-GB'): Logger => {
   const options = { ...(wipePreviousLogs && { flags: 'w' }) };
 
-  const formatter = printf(({ level, message, timestamp }) => {
-    return `${new Date(timestamp).toLocaleTimeString(locale)} ${level}: ${message}`;
-  });  
+  const consoleFormatter = printf(({ level, message, timestamp }) =>
+    `${new Date(timestamp).toLocaleTimeString(locale)} ${level.padStart(15)}: ${message}`);  
+
+  const fileFormatter = printf(({ level, message, timestamp }) => {
+    const date = new Date(timestamp);
+    const dateString = date.toLocaleDateString(locale);
+    const timeString = date.toLocaleTimeString(locale);
+    return `${dateString} ${timeString} ${level.padStart(5)}: ${message}`;
+  });
+
+  const fileFormat = combine(format.splat(), format.simple(), timestamp(), fileFormatter);
+  const consoleFormat = combine(
+    format.splat(),
+    format.simple(),
+    timestamp(),
+    format.colorize({ level: true }),
+    consoleFormatter
+  );
 
   const winstonLogger = createLogger({
     level: 'info',
-    format: combine(
-      format.splat(),
-      format.simple(),
-      format.colorize(),
-      timestamp(),
-      formatter
-    ),
     transports: [
-      new transports.File({ filename: 'logs/info.log', level: 'info', options }),
-      new transports.File({ filename: 'logs/debug.log', level: 'debug', options }),
-      new transports.File({ filename: 'logs/silly.log', level: 'silly', options }),
-      new transports.Console({ level: process.env.LOG_LEVEL || 'debug' })
+      new transports.File({ filename: 'logs/info.log', level: 'info', options, format: fileFormat }),
+      new transports.File({ filename: 'logs/debug.log', level: 'debug', options, format: fileFormat }),
+      new transports.File({ filename: 'logs/silly.log', level: 'silly', options, format: fileFormat }),
+      new transports.Console({ level: process.env.LOG_LEVEL || 'debug', format: consoleFormat })
     ]
   });
 
   const logger = {
-    log: logFormatter(winstonLogger.info.bind(winstonLogger)),
+    log: console.log, // unchanged
     info: logFormatter(winstonLogger.info.bind(winstonLogger)),
     debug: logFormatter(winstonLogger.debug.bind(winstonLogger)),
     silly: logFormatter(winstonLogger.silly.bind(winstonLogger)),
@@ -96,7 +104,6 @@ export const overwriteConsole = (wipePreviousLogs = true, locale = 'en-GB') => {
   const logger = getLogger(wipePreviousLogs, locale);
 
   console.error = logFormatter(logger.error.bind(logger));
-  console.log = logFormatter(logger.info.bind(logger));
   console.info = logFormatter(logger.info.bind(logger));
   console.debug = logFormatter(logger.debug.bind(logger));
   console.warn = logFormatter(logger.warn.bind(logger));
