@@ -22,27 +22,16 @@ if (env.error) {
 const { combine, timestamp, printf } = format;
 
 const logFormatter = (logFunction: LeveledLogMethod) => {
+  // winston can't handle comma-separated logging
   return(...args: any[]) => {
-    const strings: string[] = [];
-    const objs: any[] = [];
-    let count = 0;
+    const result: string[] = [];
     args.forEach(arg => {
-      if (typeof arg === 'object') {
-        objs.push(arg);
-        ++count;
-      } else if (arg?.toString) {
-        if (strings[count]) strings[count] += ` ${arg.toString()}`;
-        else strings[count] = `${arg.toString()}`;
-      } else if (arg) {
-        if (strings[count]) strings[count] += ` ${arg}`;
-        else strings[count] = `${arg}`;
-      }
+        if (typeof arg === 'object') result.push(JSON.stringify(arg))
+        else if (arg?.toString) result.push(`${arg.toString()}`)
+        else if (arg) result.push(arg);
     });
-    for (let i = 0; i < count; i++) {
-      if (strings[i]) logFunction(strings[i]);
-      if (objs[i]) logFunction(objs[i]);
-    }
-  }
+    logFunction(result.join(' '));
+  };
 }
 
 export const getLogger = (wipePreviousLogs = true, locale = 'en-GB'): Logger => {
@@ -73,7 +62,7 @@ export const getLogger = (wipePreviousLogs = true, locale = 'en-GB'): Logger => 
   });
 
   const logger = {
-    log: console.log, // unchanged
+    log: console.log,
     info: logFormatter(winstonLogger.info.bind(winstonLogger)),
     debug: logFormatter(winstonLogger.debug.bind(winstonLogger)),
     silly: logFormatter(winstonLogger.silly.bind(winstonLogger)),
