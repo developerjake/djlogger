@@ -14,15 +14,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "dist",
-    "paths": {
-      "@app/*": ["src/*"],
-      "@root/*": ["*"]
-    },
     "resolveJsonModule": true,
     "strict": false,
     "target": "es2020",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*"]
+  "include": ["app/**/*"]
 }
