@@ -1,44 +1,65 @@
-# DJ Logger
-
-Some simple typescript logging tools using [winston](https://www.npmjs.com/package/winston). 
-
+# @developerjake/djlogger
+[![npm (scoped)](https://img.shields.io/npm/v/@developerjake/djlogger)](https://www.npmjs.com/package/@developerjake/djlogger) [![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/developerjake/djlogger/main)](https://github.com/developerjake/djlogger)
+A simple collection of typescript logging tools using [winston](https://www.npmjs.com/package/winston) - adds timestamps, colourization and will output your logs into a `logs` directory in the root of your project.
 ## Overview
+This is a minimalist set of utilities that can be imported and used within a few seconds to get drastically better and more useful logs into you application as you build it - nothing more. You'll probably want to replace it down the line. This is just a convenience tool for hitting the ground running.
 
-Logs are timestamped and coloured by log-level and log files are saved in the root of the project, separated by log-level:
+Using  the utilities herein to log in your application will save all of your logs to appropriately named files added to a `logs/` directory which will be created in the root of your project.
 * info.log
 * debug.log
 * silly.log
 
+All logs will be timestamped; the default locale is `en-GB` which can be changed.
+Timestamps are just that, _time_ stamps. They do not include the date.
+Logging in the terminal will have the log-level printed and colourized.
+## Ready-Steady-Go
+1. Install with one of these depending on your preferred package manager:
+	* `npm install @developerjake/djlogger`
+	* `yarn add @developerjake/djlogger`
+2. Import what you need (see [examples](#example-usage)) and start using it.
 ## Configuration
-
-This package searches for a `.env` files in the root of the app with a `LOG_LEVEL` variable. If not set, logging defaults to `debug`. The standard options of `info`, `debug`, etc. are available.
-
-By default, the logger and logging methods herein will wipe down old log files each time your app is started, and the 'en-GB' locale will be used for timestamps.
-
-This can be changed with parameters available as shown in the public API.
+Everything works just fine out of the box. These conflagration options are all optional.
+### Set  the logging level (Optional)
+* Use a variable in a `.env` file  in the root of your project
+* If not set, logging level defaults to `debug`
+```
+LOG_LEVEL=silly
+```
+Options are `info`, `debug`, and `silly`.
+### Change your locale (Optional)
+The locale defaults to `en-GB`. If you want a different once, [see this example](#logger-instance-with-custom-configuration) on how to set it.
+### Keep old logs (Optional)
+By default, each time you restart your app, the old log files are nuked. Why? Well, because that's my preference. Change it easily - [see this example](#logger-instance-with-custom-configuration).
 
 ## Public API
+#### Get a logger instance
+*  `logger`
+*  `getLogger(wipePreviousLogs=true, locale='en-GB')`
+#### Overwrite the NodeJS Console
+*  `overWriteConsole(wipePreviousLogs=true, locale='en-GB')`
+#### Individual logging methods
+*  `log`
+*  `info`
+*  `debug`
+*  `silly`
+*  `warn`
+*  `error`
+*  `table`
 
-A logger instance using the default configuration:
-* `logger`
+## Example Usage
+### Set  the logging level
+* Use a variable in a `.env` file  in the root of your project
+* If not set, logging level defaults to `debug`
+```JSON
+LOG_LEVEL=silly
+```
+### Default-config logger
+```typescript
+import { logger } from 'djlogger';
 
-A method to obtain a logger with custom options:
-* `getLogger(wipePreviousLogs = true, locale = 'en-GB')`
-
-Instead of importing and using a logger or logging-methods, this can be called to overwrite all built-in NodeJS console-logging methods to make them use winston and save logs to files:
-* `overWriteConsole(wipePreviousLogs = true, locale = 'en-GB')`
-
-Alternately, individual logging methods using the default configuation can be imported:
-* `log`
-* `info`
-* `debug`
-* `silly`
-* `warn`
-* `error`
-* `table`
-
-## Examples
-
+logger.info('Frontend? 🤔 Backend? 🙄 Weekend? 😁');
+```
+### Logger instance with custom configuration
 ```typescript
 import { getLogger } from 'djlogger';
 
@@ -48,7 +69,7 @@ const logger = getLogger(wipePreviousLogs, locale);
 
 logger.warn('warning❗'); // 07:44:12 warn: warning❗
 ```
-
+### Overwrite the NodeJS Console logging methods
 ```typescript
 import { overwriteConsole } from 'djlogger';
 
@@ -56,15 +77,20 @@ overWriteConsole(undefined, 'ja-JP-u-ca-japanese');
 
 console.log('🔒 locked'); // 14:26:33 info: 🔒 locked
 ```
-
+### Individual logging level methods
 ```typescript
-import { table } from 'djlogger';
+import { table, error, debug } from 'djlogger';
 
 const stuff = [
   ['BTC', 'amazing'],
   ['ETH', 'defi-tacular'],
   ['DOGE', 'meme-trash']
-]
+];
 
-table(stuff);
+try {
+  table(stuff);
+} catch (e: Error) {
+  error(`💥 Ka-blamo`, e.message);
+  debug(e.stack);
+}
 ```
