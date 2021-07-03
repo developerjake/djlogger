@@ -1,6 +1,6 @@
 {
   "name": "@developerjake/djlogger",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/developerjake/djlogger#readme",
   "private": false,
   "license": "MIT",
@@ -17,9 +17,9 @@
     "url": "https://github.com/developerjake/djlogger/issues"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "tsc"
   },
-  "prepare": "tsc",
   "main": "dist/logger.js",
   "types": "dist/logger.d.ts",
   "files": [
