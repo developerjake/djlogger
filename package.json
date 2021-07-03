@@ -1,8 +1,8 @@
 {
-  "name": "djlogger",
-  "version": "0.0.1",
+  "name": "@developerjake/djlogger",
+  "version": "0.0.2",
   "homepage": "https://github.com/developerjake/djlogger#readme",
-  "private": true,
+  "private": false,
   "license": "TBC",
   "author": {
     "name": "developerjake",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/developerjake/"
+    "url": "https://github.com/developerjake/djlogger"
   },
   "bugs": {
     "url": "https://github.com/developerjake/djlogger/issues"
@@ -20,13 +20,13 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@types/winston": "^2.4.4",
     "dotenv": "^10.0.0",
     "tslib": "^2.3.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/node": "14.14.25",
+    "@types/winston": "^2.4.4",
     "eslint": "7.19.0",
     "ts-node": "10.0.0",
     "typescript": "4.1.3"
