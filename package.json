@@ -1,6 +1,6 @@
 {
   "name": "@developerjake/djlogger",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/developerjake/djlogger#readme",
   "private": false,
   "license": "TBC",
@@ -21,6 +21,10 @@
     "build": "tsc"
   },
   "prepare": "tsc",
+  "files": [
+    "dist/**",
+    "package.json"
+  ],
   "dependencies": {
     "dotenv": "^10.0.0",
     "tslib": "^2.3.0",
