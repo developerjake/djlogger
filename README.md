@@ -51,13 +51,13 @@ This package exposes the following.
 ## Example Usage
 ### Logger instance with default configuration
 ```typescript
-import { logger } from 'djlogger';
+import { logger } from '@developerjake/djlogger';
 
 logger.info('Frontend? 🤔 Backend? 🙄 Weekend? 😁');
 ```
 ### Logger instance with custom configuration
 ```typescript
-import { getLogger } from 'djlogger';
+import { getLogger } from '@developerjake/djlogger';
 
 const wipePreviousLogs = false;
 const locale = 'de-DE';
@@ -67,7 +67,7 @@ logger.warn('warning❗'); // 07:44:12 warn: warning❗
 ```
 ### Overwrite the NodeJS Console logging methods
 ```typescript
-import { overwriteConsole } from 'djlogger';
+import { overwriteConsole } from '@developerjake/djlogger';
 
 overWriteConsole(undefined, 'ja-JP-u-ca-japanese');
 
@@ -75,7 +75,7 @@ console.log('🔒 locked'); // 14:26:33 info: 🔒 locked
 ```
 ### Individual logging level methods
 ```typescript
-import { table, error, debug } from 'djlogger';
+import { table, error, debug } from '@developerjake/djlogger';
 
 const stuff = [
   ['BTC', 'amazing'],
