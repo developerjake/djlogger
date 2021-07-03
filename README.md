@@ -38,7 +38,7 @@ This package exposes the following.
 ### A method which returns a logger instance
 *  `getLogger(wipePreviousLogs=true, locale='en-GB')`
 ### A method which overwrites the NodeJS Console logging methods
-*  `overWriteConsole(wipePreviousLogs=true, locale='en-GB')`
+*  `overwriteConsole(wipePreviousLogs=true, locale='en-GB')`
 ### Logging methods
 *  `log`
 *  `info`
