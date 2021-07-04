@@ -10,6 +10,7 @@ Log files saved into the `logs` directory in the root of your project are named 
 * info.log
 * debug.log
 * silly.log
+* error.log
 
 All logs will be timestamped (does not include the date).
 Logging in the terminal will have the log-level printed and colourized.
@@ -29,7 +30,7 @@ Everything works out of the box; these conflagration options are optional.
 ```
 LOG_LEVEL=silly
 ```
-Options are `info`, `debug`, and `silly`.
+Options are `info`, `debug`, `silly`, `warn` and `error`.
 
 ### Change your locale (Optional)
 The locale defaults to `en-GB`. If you want a different one, [see this example](#logger-instance-with-custom-configuration) on how to set it.

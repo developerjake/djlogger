@@ -57,6 +57,7 @@ export const getLogger = (wipePreviousLogs = true, locale = 'en-GB'): Logger => 
       new transports.File({ filename: 'logs/info.log', level: 'info', options, format: fileFormat }),
       new transports.File({ filename: 'logs/debug.log', level: 'debug', options, format: fileFormat }),
       new transports.File({ filename: 'logs/silly.log', level: 'silly', options, format: fileFormat }),
+      new transports.File({ filename: 'logs/error.log', level: 'error', options, format: fileFormat }),
       new transports.Console({ level: process.env.LOG_LEVEL || 'debug', format: consoleFormat })
     ]
   });
