@@ -56,6 +56,8 @@ This package exposes the following.
 *  `error`
 *  `table`
 
+**NOTE** using `log()` or `table()` will not persist the logs to a log-file.
+
 ## Example Usage
 ### Logger instance with default configuration
 ```typescript
