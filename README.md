@@ -15,7 +15,7 @@ Log files saved into the `logs` directory in the root of your project are named 
 
 Logging to the terminal is timestamped (does not include the date) and includes the colourized log-level.
 Logs output to file include the full date & timestamp, and the log level.
-Any object logged are stringified.
+Any objects logged are stringified.
 
 ## `log` and `table`
 These two methods are excluded from the file-logging outputs. If, for  whatever reason, you fancy logging something to the console but don't want it to be output into the logging files, you can call `log`.
@@ -94,7 +94,9 @@ import { overwriteConsole } from '@developerjake/djlogger';
 
 overWriteConsole(undefined, 'ja-JP-u-ca-japanese');
 
-console.log('🔒 locked'); // 14:26:33 info: 🔒 locked
+console.info('🔒 locked');              // 14:26:33 info: 🔒 locked
+console.debug('🔓 unlocked');           // 14:26:33 debug: 🔓 unlocked
+console.log('🔏 lock & fountain pen?'); // 🔏 lock & fountain pen?
 ```
 
 ### Individual logging level methods
