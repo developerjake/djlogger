@@ -10,10 +10,15 @@ Log files saved into the `logs` directory in the root of your project are named 
 * info.log
 * debug.log
 * silly.log
+* warn.log
 * error.log
 
-All logs will be timestamped (does not include the date).
-Logging in the terminal will have the log-level printed and colourized.
+Logging to the terminal is timestamped (does not include the date) and includes the colourized log-level.
+Logs output to file include the full date & timestamp, and the log level.
+Any object logged are stringified.
+
+## `log` and `table`
+These two methods are excluded from the file-logging outputs. If, for  whatever reason, you fancy logging something to the console but don't want it to be output into the logging files, you can call `log`.
 
 ## Ready-Steady-Go
 1. Install the package with one of these depending on your preferred package manager:
@@ -57,6 +62,12 @@ This package exposes the following.
 *  `table`
 
 **NOTE** using `log()` or `table()` will not persist the logs to a log-file.
+
+## Gatcha
+
+**Do not** use both of the instance logging methods and the overwritten console methods together - doing so will result in small chunks of the logs in the log-files being discarded. 
+
+**Stick to one method** - either use `overwriteConsole()` and use the `console` logging methods, _or_ import the `logger` or it's instance logging methods such as `info` and `debug`.
 
 ## Example Usage
 ### Logger instance with default configuration
